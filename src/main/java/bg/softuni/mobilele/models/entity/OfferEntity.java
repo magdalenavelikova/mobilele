@@ -7,14 +7,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "offers")
 public class OfferEntity extends BaseEntity {
-    //    •	id – uuid or number.
+
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "offer_id", columnDefinition = "VARCHAR(40)")
+    private UUID offerId;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(value = EnumType.ORDINAL)
@@ -26,12 +36,15 @@ public class OfferEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
     @Enumerated(value = EnumType.ORDINAL)
+    @Column(nullable = false)
     private Transmission transmission;
     private Integer year;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private ModelEntity model;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private UserEntity seller;
 
 
