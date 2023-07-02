@@ -1,6 +1,7 @@
 package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.model.dto.UserLoginDto;
+import bg.softuni.mobilele.model.dto.UserRegisterDto;
 import bg.softuni.mobilele.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("users")
-public class UserLoginController {
+public class UserController {
     private UserService userService;
 
-    public UserLoginController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -29,8 +30,15 @@ public class UserLoginController {
     @PostMapping("/login")
     public String login(UserLoginDto userLoginDto) {
         System.out.println("User is logged: " + userService.login(userLoginDto));
-
-
+        return "redirect:/";
+    }
+    @GetMapping("/register")
+    public String register(){
+        return "auth-register.html";
+    }
+    @PostMapping("/register")
+    public String register(UserRegisterDto userRegisterDto){
+        userService.registerAndLogin(userRegisterDto);
         return "redirect:/";
     }
 }

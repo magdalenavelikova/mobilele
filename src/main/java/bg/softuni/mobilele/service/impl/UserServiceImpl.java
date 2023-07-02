@@ -6,22 +6,26 @@ import bg.softuni.mobilele.model.entity.UserEntity;
 import bg.softuni.mobilele.repository.UserRepository;
 import bg.softuni.mobilele.service.UserService;
 import bg.softuni.mobilele.user.CurrentUser;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private CurrentUser currentUser;
-    private PasswordEncoder passwordEncoder;
-    private Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final ModelMapper mapper;
+    private final CurrentUser currentUser;
+    private final PasswordEncoder passwordEncoder;
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, CurrentUser currentUser, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper, CurrentUser currentUser, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.mapper = mapper;
         this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
     }
@@ -33,9 +37,9 @@ public class UserServiceImpl implements UserService {
             LOGGER.info("User with email [{}] not found.", userLoginDto.getUsername());
             return false;
         }
-        var rowPassword=userLoginDto.getPassword();
-        var hashPassword=userOpt.get().getPassword();
-        boolean success = passwordEncoder.matches(rowPassword,hashPassword);
+        var rowPassword = userLoginDto.getPassword();
+        var hashPassword = userOpt.get().getPassword();
+        boolean success = passwordEncoder.matches(rowPassword, hashPassword);
 
         if (success) {
             login(userOpt.get());
@@ -46,13 +50,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(UserRegisterDto userRegisterDto) {
-
+    public void registerAndLogin(UserRegisterDto userRegisterDto) {
+        UserEntity user = mapper.map(userRegisterDto, UserEntity.class);
+        var rowPassword = user.getPassword();
+        user.setPassword(passwordEncoder.encode(rowPassword));
+        user.setCreated(LocalDateTime.now());
+        userRepository.save(user);
+        login(user);
     }
 
     public void login(UserEntity userEntity) {
-        currentUser
-                .setLoggedIn(true);
+        currentUser.setLoggedIn(true);
         currentUser.setName(userEntity.getFirstName() + " " + userEntity.getLastName());
 
     }
