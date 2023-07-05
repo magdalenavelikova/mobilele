@@ -1,5 +1,7 @@
 package bg.softuni.mobilele.config;
 
+import bg.softuni.mobilele.model.dto.UserRegisterDto;
+import bg.softuni.mobilele.model.entity.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 public class ApplicationConfig {
     @Bean
     public ModelMapper modelMapper() {
+
             return new ModelMapper();
     }
 

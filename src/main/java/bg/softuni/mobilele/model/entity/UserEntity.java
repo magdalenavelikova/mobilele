@@ -8,10 +8,10 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+
 @Entity(name = "users")
 public class UserEntity extends BaseEntity {
 
@@ -24,11 +24,12 @@ public class UserEntity extends BaseEntity {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
-
+    @Column
     private Boolean isActive;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> roles = new ArrayList<>();
     @Column(name = "image_url")
     private String imageUrl;
+
 
 }

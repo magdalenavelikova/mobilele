@@ -3,9 +3,11 @@ package bg.softuni.mobilele.service.impl;
 import bg.softuni.mobilele.model.dto.UserLoginDto;
 import bg.softuni.mobilele.model.dto.UserRegisterDto;
 import bg.softuni.mobilele.model.entity.UserEntity;
+import bg.softuni.mobilele.model.mapper.UserMapper;
 import bg.softuni.mobilele.repository.UserRepository;
 import bg.softuni.mobilele.service.UserService;
 import bg.softuni.mobilele.user.CurrentUser;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,20 +20,22 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final ModelMapper mapper;
+
+    private final UserMapper userMapper;
     private final CurrentUser currentUser;
     private final PasswordEncoder passwordEncoder;
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper, CurrentUser currentUser, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, CurrentUser currentUser, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.mapper = mapper;
+        this.userMapper = userMapper;
         this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public boolean login(UserLoginDto userLoginDto) {
+
         Optional<UserEntity> userOpt = userRepository.findByEmail(userLoginDto.getUsername());
         if (userOpt.isEmpty()) {
             LOGGER.info("User with email [{}] not found.", userLoginDto.getUsername());
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerAndLogin(UserRegisterDto userRegisterDto) {
-        UserEntity user = mapper.map(userRegisterDto, UserEntity.class);
+        UserEntity user = userMapper.userDtoToUserEntity(userRegisterDto);
         var rowPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rowPassword));
         user.setCreated(LocalDateTime.now());

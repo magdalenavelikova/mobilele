@@ -1,7 +1,7 @@
 package bg.softuni.mobilele.model.entity;
 
-import bg.softuni.mobilele.model.entity.enums.Engine;
-import bg.softuni.mobilele.model.entity.enums.Transmission;
+import bg.softuni.mobilele.model.enums.Engine;
+import bg.softuni.mobilele.model.enums.Transmission;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

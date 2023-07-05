@@ -1,6 +1,6 @@
 package bg.softuni.mobilele.model.entity;
 
-import bg.softuni.mobilele.model.entity.enums.Role;
+import bg.softuni.mobilele.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
