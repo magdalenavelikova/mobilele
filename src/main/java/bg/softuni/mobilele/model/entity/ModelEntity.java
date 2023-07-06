@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "models")
+@Entity
+@Table(name = "models")
 public class ModelEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;

@@ -15,7 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "offers")
+@Entity
+@Table(name = "offers")
 public class OfferEntity extends BaseEntity {
 
     @GeneratedValue(generator = "UUID")

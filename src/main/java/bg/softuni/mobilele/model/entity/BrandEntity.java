@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "brands")
+@Entity
+@Table(name = "brands")
 public class BrandEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
