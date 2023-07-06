@@ -8,7 +8,6 @@ import bg.softuni.mobilele.repository.UserRepository;
 import bg.softuni.mobilele.service.UserService;
 import bg.softuni.mobilele.user.CurrentUser;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(UserLoginDto userLoginDto) {
-
         Optional<UserEntity> userOpt = userRepository.findByEmail(userLoginDto.getUsername());
         if (userOpt.isEmpty()) {
             LOGGER.info("User with email [{}] not found.", userLoginDto.getUsername());
@@ -44,9 +42,9 @@ public class UserServiceImpl implements UserService {
         var rowPassword = userLoginDto.getPassword();
         var hashPassword = userOpt.get().getPassword();
         boolean success = passwordEncoder.matches(rowPassword, hashPassword);
-
+        UserEntity user = userOpt.get();
         if (success) {
-            login(userOpt.get());
+            setCurrent(user);
         } else {
             logout();
         }
@@ -60,11 +58,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(rowPassword));
         user.setCreated(LocalDateTime.now());
         userRepository.save(user);
-        login(user);
+        setCurrent(user);
     }
 
-    public void login(UserEntity userEntity) {
+    public void setCurrent(UserEntity userEntity) {
         currentUser.setLoggedIn(true);
+        currentUser.setEmail(userEntity.getEmail());
         currentUser.setName(userEntity.getFirstName() + " " + userEntity.getLastName());
 
     }

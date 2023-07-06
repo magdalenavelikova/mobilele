@@ -1,14 +1,12 @@
 package bg.softuni.mobilele.service;
 
-import bg.softuni.mobilele.model.dto.AddOfferDto;
-import bg.softuni.mobilele.model.dto.BrandDTO;
-import bg.softuni.mobilele.model.dto.ModelDto;
+import bg.softuni.mobilele.model.dto.*;
 
 import java.util.List;
 
 public interface OfferService {
 
     public void addOffer(AddOfferDto addOfferDto);
-    public List<BrandDTO> getAllBrands();
-    public ModelDto getModels();
+
+   public List<OfferDto> allOffers();
 }

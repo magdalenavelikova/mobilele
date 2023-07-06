@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class BrandDTO {
+    private Long id;
     private String name;
     private List<ModelDto> models;
 
