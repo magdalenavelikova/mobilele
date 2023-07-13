@@ -36,38 +36,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//
-//        http
-//
-//                .authorizeHttpRequests(
-//                        (authorize) -> authorize
-//
-//                               .requestMatchers(
-//                                       PathRequest
-//                                                .toStaticResources()
-//                                               .atCommonLocations()
-//                                .permitAll()
-//
-//                                .requestMatchers("/","").permitAll()
-//                                .requestMatchers("/", "/users/login", "/users/register", "/offers/all").permitAll()
-//                                .requestMatchers("/brands/all").hasRole(Role.ADMIN.name())
-//                                .anyRequest().authenticated()
-//                )
-//                .formLogin(
-//                        form -> form
-//                                .loginPage("/users/login")
-//                                .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-//                                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-//                                .defaultSuccessUrl("/")
-//                                .failureUrl("/users/login-error")
-//                )
-//                .logout((logout) -> logout.logoutUrl("/users/logout").
-//                        logoutSuccessUrl("/").//go to homepage after logout
-//                                invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID"))
-//        ;
-//
-//        return http.build();
         http.
                 // define which requests are allowed and which not
                         authorizeRequests().
@@ -101,7 +69,6 @@ public class SecurityConfig {
                 // invalidate the session and delete the cookies
                         invalidateHttpSession(true).
                 deleteCookies("JSESSIONID");
-
 
         return http.build();
     }

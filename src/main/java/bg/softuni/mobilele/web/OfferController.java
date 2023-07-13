@@ -59,8 +59,12 @@ public class OfferController {
         offerService.addOffer(addOfferModel);
         return "redirect:/offers/all";
     }
+    @GetMapping("/search")
+    public String searchOffer() {
+        return "offer-search";
+    }
 
-    @PostMapping("/offers/search")
+    @PostMapping("/search")
     public String searchQuery(@Valid SearchOfferDTO searchOfferDTO,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) {
@@ -72,11 +76,12 @@ public class OfferController {
                     bindingResult);
             return "redirect:/offers/search";
         }
-
+        //TODO: Лъчо, моля покажи по-културен вариант от това, тъй като работи, но това изписване меко казано
+        // ми бърка някъде. В data.sql съм добавил оферта, за да се пробва search-a
         return String.format("redirect:/offers/search/%s", searchOfferDTO.getQuery());
     }
 
-    @GetMapping("offers/search/{query}")
+    @GetMapping("/search/{query}")
     public String searchResults(@PathVariable String query, Model model) {
         model.addAttribute("offers", this.offerService.findOfferByOfferName(query));
         return "offer-search";
@@ -88,5 +93,4 @@ public class OfferController {
     private SearchOfferDTO initSearchModel() {
         return new SearchOfferDTO();
     }
-
 }

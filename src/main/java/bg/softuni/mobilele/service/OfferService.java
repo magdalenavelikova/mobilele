@@ -40,6 +40,7 @@ public class OfferService  {
         OfferEntity newOffer = offerMapper.addOfferDtoToOfferEntity(addOfferDto);
         newOffer.setModel(modelService.findById(addOfferDto.getModelId()));
        // UserEntity user = userRepository.findByEmail(currentUser.getEmail()).orElseThrow();
+
       //  newOffer.setSeller(user);
         newOffer.setCreated(LocalDateTime.now());
         offerRepository.save(newOffer);
@@ -68,6 +69,7 @@ public class OfferService  {
                 .map(offer -> offerMapper.offerEntityToCardListingOfferDto(offer))
                 .toList();
     }
+
 
 
 }
