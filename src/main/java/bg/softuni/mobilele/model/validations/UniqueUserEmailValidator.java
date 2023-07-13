@@ -1,8 +1,7 @@
 package bg.softuni.mobilele.model.validations;
 
 import bg.softuni.mobilele.repository.UserRepository;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.*;
 
 public class UniqueUserEmailValidator implements ConstraintValidator<UniqueUserEmail,String> {
 
