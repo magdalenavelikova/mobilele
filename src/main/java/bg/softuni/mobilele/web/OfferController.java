@@ -2,9 +2,12 @@ package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.model.dto.AddOfferDto;
 import bg.softuni.mobilele.model.dto.SearchOfferDTO;
+import bg.softuni.mobilele.model.user.MobileleUserDetails;
 import bg.softuni.mobilele.service.BrandService;
 import bg.softuni.mobilele.service.OfferService;
 import javax.validation.*;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +53,8 @@ public class OfferController {
     @PostMapping("/add")
     public String addOffer(@Valid AddOfferDto addOfferModel,
                            BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
+                           RedirectAttributes redirectAttributes,
+                           @AuthenticationPrincipal MobileleUserDetails mobileleUserDetails) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addOfferModel", addOfferModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferModel", bindingResult);
@@ -76,8 +80,7 @@ public class OfferController {
                     bindingResult);
             return "redirect:/offers/search";
         }
-        //TODO: Лъчо, моля покажи по-културен вариант от това, тъй като работи, но това изписване меко казано
-        // ми бърка някъде. В data.sql съм добавил оферта, за да се пробва search-a
+
         return String.format("redirect:/offers/search/%s", searchOfferDTO.getQuery());
     }
 
