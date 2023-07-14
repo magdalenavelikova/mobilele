@@ -1,23 +1,17 @@
 package bg.softuni.mobilele.config;
 
 
-import bg.softuni.mobilele.model.enums.Role;
 import bg.softuni.mobilele.repository.UserRepository;
 import bg.softuni.mobilele.service.AppUserDetailsService;
-import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 @Configuration
@@ -41,7 +35,7 @@ public class SecurityConfig {
                         authorizeRequests().
                 // everyone can download static resources (css, js, images)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                // everyone can login and register
+                // everyone can log and register
                         antMatchers("/", "/users/login", "/users/register").permitAll().
                 // all other pages are available for logger in users
                         anyRequest().
@@ -60,7 +54,7 @@ public class SecurityConfig {
                 // where to go in case that the login failed
                         failureForwardUrl("/users/login-error").
                 and().
-                // configure logut
+                // configure logout
                         logout().
                 // which is the logout url, must be POST request
                         logoutUrl("/users/logout").

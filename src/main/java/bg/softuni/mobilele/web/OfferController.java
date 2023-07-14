@@ -8,6 +8,7 @@ import bg.softuni.mobilele.service.OfferService;
 import javax.validation.*;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,13 +55,13 @@ public class OfferController {
     public String addOffer(@Valid AddOfferDto addOfferModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
-                           @AuthenticationPrincipal MobileleUserDetails mobileleUserDetails) {
+                           @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addOfferModel", addOfferModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferModel", bindingResult);
             return "redirect:/offers/add";
         }
-        offerService.addOffer(addOfferModel);
+        offerService.addOffer(addOfferModel,userDetails);
         return "redirect:/offers/all";
     }
     @GetMapping("/search")

@@ -31,7 +31,7 @@ public class AddOfferDto {
     @Positive
     private Integer price;
     @NotNull
-    @Min(1890)
+    @Min(value = 1890, message = "Year must be 1890 or above.")
     private Integer year;
     @NotEmpty
     private String description;

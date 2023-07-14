@@ -5,7 +5,7 @@ logging:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-
+    password: ***REMOVED***
     url: jdbc:mysql://localhost:3306/mobileleDb?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=TRUE
     username: root
   jpa:
@@ -19,6 +19,11 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
-  sql:
-    init:
-      mode: never
+#  sql:
+#    init:
+#      mode: never
+mail:
+  host: "localhost"
+  port: 1025
+  username: "ddf"
+  password: " "

@@ -5,11 +5,13 @@ import bg.softuni.mobilele.model.dto.CardListingOfferDTO;
 import bg.softuni.mobilele.model.dto.OfferDto;
 import bg.softuni.mobilele.model.entity.OfferEntity;
 
+import bg.softuni.mobilele.model.entity.UserEntity;
 import bg.softuni.mobilele.model.mapper.OfferMapper;
 import bg.softuni.mobilele.repository.BrandRepository;
 import bg.softuni.mobilele.repository.OfferRepository;
 import bg.softuni.mobilele.repository.UserRepository;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OfferService  {
+public class OfferService {
     private final OfferRepository offerRepository;
     private final BrandRepository brandRepository;
     private final ModelService modelService;
@@ -36,12 +38,11 @@ public class OfferService  {
     }
 
 
-    public void addOffer(AddOfferDto addOfferDto) {
+    public void addOffer(AddOfferDto addOfferDto, UserDetails userDetails) {
         OfferEntity newOffer = offerMapper.addOfferDtoToOfferEntity(addOfferDto);
         newOffer.setModel(modelService.findById(addOfferDto.getModelId()));
-       // UserEntity user = userRepository.findByEmail(currentUser.getEmail()).orElseThrow();
-
-      //  newOffer.setSeller(user);
+        UserEntity user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+        newOffer.setSeller(user);
         newOffer.setCreated(LocalDateTime.now());
         offerRepository.save(newOffer);
 
@@ -50,8 +51,8 @@ public class OfferService  {
 
     public List<OfferDto> allOffers() {
         List<OfferEntity> offers = offerRepository.findAll();
-       return  offers.stream()
-               .sorted(Comparator.comparing(OfferEntity::getCreated).reversed())
+        return offers.stream()
+                .sorted(Comparator.comparing(OfferEntity::getCreated).reversed())
                 .map(offer -> {
                     OfferDto offerDto = offerMapper.offerEntityToOfferDto(offer);
                     String brandName = offer.getModel().getBrand().getName();
@@ -62,6 +63,7 @@ public class OfferService  {
 
 
     }
+
     public List<CardListingOfferDTO> findOfferByOfferName(String query) {
         return this.offerRepository
                 .findAllByModel_NameContains(query)
@@ -69,7 +71,6 @@ public class OfferService  {
                 .map(offer -> offerMapper.offerEntityToCardListingOfferDto(offer))
                 .toList();
     }
-
 
 
 }

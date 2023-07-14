@@ -15,24 +15,21 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class UserService  {
+public class UserService {
     private final UserRepository userRepository;
-
     private final UserDetailsService userDetailsService;
     private final UserMapper userMapper;
-
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserService(UserRepository userRepository, UserDetailsService userDetailsService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserDetailsService userDetailsService, UserMapper userMapper, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
         this.userMapper = userMapper;
-
+        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
 
     public void registerAndLogin(UserRegisterDto userRegisterDto) {
@@ -40,13 +37,14 @@ public class UserService  {
         var rowPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rowPassword));
         user.setCreated(LocalDateTime.now());
-
-
         userRepository.save(user);
         login(user.getEmail());
-//        emailService.sendRegistrationEmail(user.getEmail(),
-//                user.getFirstName() + " " + user.getLastName(),
-//                preferredLocale);
+        emailService.sendRegistrationEmail(
+                userRegisterDto.getEmail(),
+                userRegisterDto.getFirstName() + " " + userRegisterDto.getLastName()
+        );
+
+
     }
 
     public void login(String userName) {
@@ -64,6 +62,5 @@ public class UserService  {
                 getContext().
                 setAuthentication(auth);
     }
-
 
 }
