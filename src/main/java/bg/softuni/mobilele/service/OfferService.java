@@ -1,8 +1,7 @@
 package bg.softuni.mobilele.service;
 
 import bg.softuni.mobilele.model.dto.AddOfferDto;
-import bg.softuni.mobilele.model.dto.CardListingOfferDTO;
-import bg.softuni.mobilele.model.dto.OfferDto;
+import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.entity.OfferEntity;
 
 import bg.softuni.mobilele.model.entity.UserEntity;
@@ -11,13 +10,14 @@ import bg.softuni.mobilele.repository.BrandRepository;
 import bg.softuni.mobilele.repository.OfferRepository;
 import bg.softuni.mobilele.repository.UserRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OfferService {
@@ -49,26 +49,18 @@ public class OfferService {
     }
 
 
-    public List<OfferDto> allOffers() {
-        List<OfferEntity> offers = offerRepository.findAll();
-        return offers.stream()
-                .sorted(Comparator.comparing(OfferEntity::getCreated).reversed())
-                .map(offer -> {
-                    OfferDto offerDto = offerMapper.offerEntityToOfferDto(offer);
-                    String brandName = offer.getModel().getBrand().getName();
-                    offerDto.setBrandName(brandName);
-                    return offerDto;
-                })
-                .collect(Collectors.toList());
+    public Page<OfferDTO> allOffers(Pageable pageable) {
+        return offerRepository.findAll(pageable)
+                .map(offerMapper::offerEntityToOfferDto);
 
 
     }
 
-    public List<CardListingOfferDTO> findOfferByOfferName(String query) {
+    public List<OfferDTO> findOfferByOfferName(String query) {
         return this.offerRepository
                 .findAllByModel_NameContains(query)
                 .stream()
-                .map(offer -> offerMapper.offerEntityToCardListingOfferDto(offer))
+                .map(offer -> offerMapper.offerEntityToOfferDto(offer))
                 .toList();
     }
 

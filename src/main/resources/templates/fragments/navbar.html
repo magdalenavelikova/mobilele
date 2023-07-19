@@ -78,9 +78,9 @@
                     </li>
                 </th:block>
 
-                <li class="nav-item">
-                    <form th:method="get">
-                        <label th:text="#{navbar_language}" class="nav-link" for="lang"></label>
+                <li >
+                    <form  class="nav-item" th:method="get">
+                        <label class="nav-link" th:text="#{navbar_language}"  for="lang"></label>
                         <select
                                 onchange="this.form.submit()"
                                 id="lang"
