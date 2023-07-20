@@ -5,11 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Welcome!</h1>
-Dear <th:block th:text="${userName}"> User</th:block> tank you for registration!
-<p>We are happy that you are part of our community now!</p>
-Best regards,
-Our Team
-
+<h1 th:text="#{registration_welcome}">Welcome!</h1>
+<th:block th:text="#{registration_dear(${userName})}"> Dear User</th:block>
+<p th:text="#{registration_happy}">We are happy that you are part of our community now!</p>
+<th:block th:text="#{registration_best}"> Best Regards</th:block>
 </body>
 </html>

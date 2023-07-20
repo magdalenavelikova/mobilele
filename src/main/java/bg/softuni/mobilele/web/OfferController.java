@@ -98,7 +98,7 @@ public class OfferController {
         return "offer-search";
     }
 
-    //TODO: Имаш бонус работещо DTO - CardListingDTO със настроен mapper за offer catalogue
+
 
     @ModelAttribute(name = "searchOfferModel")
     private SearchOfferDTO initSearchModel() {
