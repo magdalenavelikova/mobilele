@@ -30,7 +30,6 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
@@ -38,8 +37,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'com.icegreen:greenmail:1.6.9'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	testRuntimeOnly 'org.hsqldb:hsqldb'
 }
 
 tasks.named('test') {
