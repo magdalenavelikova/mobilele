@@ -14,8 +14,8 @@
 <body>
 
 <div th:replace="fragments/navbar">Navbar</div>
-<div class="container">
-  <h2 class="text-center text-white">Search for offers</h2>
+<div class="container ">
+  <h2 class="text-center text-white mt-4" th:text="#{search_title}">Search for offers</h2>
   <form
           th:method="POST"
           th:action="@{/offers/search}"
@@ -27,10 +27,10 @@
       <input
               th:field="*{query}"
               th:errorclass="is-invalid"
-              class="form-control mr-sm-2"
+                            class="form-control mr-sm-2"
               style="width: 280px;"
               type="search"
-              placeholder="Search by offer model name..."
+              th:placeholder="#{search_input}"
               aria-label="Search"
               id="searchOffer"
       />
@@ -42,7 +42,7 @@
         Try writing something this time.
       </small>
     </div>
-    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    <button class="btn btn-outline-info my-2 my-sm-0" type="submit" th:text="#{search_button}">Search</button>
   </form>
 </div>
 

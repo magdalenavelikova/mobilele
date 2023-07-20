@@ -3,18 +3,14 @@ package bg.softuni.mobilele.service;
 import bg.softuni.mobilele.model.dto.AddOfferDto;
 import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.entity.OfferEntity;
-
 import bg.softuni.mobilele.model.entity.UserEntity;
 import bg.softuni.mobilele.model.mapper.OfferMapper;
-import bg.softuni.mobilele.repository.BrandRepository;
 import bg.softuni.mobilele.repository.OfferRepository;
 import bg.softuni.mobilele.repository.UserRepository;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,15 +18,15 @@ import java.util.List;
 @Service
 public class OfferService {
     private final OfferRepository offerRepository;
-    private final BrandRepository brandRepository;
+
     private final ModelService modelService;
     private final OfferMapper offerMapper;
 
     private final UserRepository userRepository;
 
-    public OfferService(OfferRepository offerRepository, BrandRepository brandRepository, ModelService modelService, OfferMapper offerMapper, UserRepository userRepository) {
+    public OfferService(OfferRepository offerRepository, ModelService modelService, OfferMapper offerMapper, UserRepository userRepository) {
         this.offerRepository = offerRepository;
-        this.brandRepository = brandRepository;
+
         this.modelService = modelService;
         this.offerMapper = offerMapper;
 
@@ -60,7 +56,7 @@ public class OfferService {
         return this.offerRepository
                 .findAllByModel_NameContains(query)
                 .stream()
-                .map(offer -> offerMapper.offerEntityToOfferDto(offer))
+                .map(offerMapper::offerEntityToOfferDto)
                 .toList();
     }
 

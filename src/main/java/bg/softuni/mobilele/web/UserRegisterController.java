@@ -29,7 +29,7 @@ public class UserRegisterController {
 
     @GetMapping("/register")
     public String register() {
-        return "auth-register.html";
+        return "auth-register";
     }
 
     @PostMapping("/register")

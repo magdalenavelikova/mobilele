@@ -29,7 +29,7 @@ public class EmailService {
     public void sendRegistrationEmail(
             String userEmail,
             String userName,
-              Locale preferredLocale
+            Locale preferredLocale
     ) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
@@ -37,11 +37,10 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setFrom("mobilele@mobilele.com");
             mimeMessageHelper.setTo(userEmail);
-            mimeMessageHelper.setSubject("Welcome");
-            mimeMessageHelper.setText(generateMessageContent(preferredLocale,userName), true);
-
-//      mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
-//      mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
+            mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
+            mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
+            mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
+            mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {

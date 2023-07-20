@@ -1,6 +1,6 @@
 package bg.softuni.mobilele.model.dto;
 
-import javax.validation.constraints.*;
+
 
 public class UserDto {
     private String email;
