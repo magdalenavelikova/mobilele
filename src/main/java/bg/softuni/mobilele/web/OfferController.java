@@ -41,7 +41,7 @@ public class OfferController {
                                     sort = "created",
                                     direction = Sort.Direction.DESC,
                                     page = 0,
-                                    size = 2) Pageable pageable) {
+                                    size = 4) Pageable pageable) {
         if (!model.containsAttribute("offers")) {
             model.addAttribute("offers", offerService.allOffers(pageable));
         }
