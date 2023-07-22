@@ -23,8 +23,12 @@ public class OfferDTO {
     private Engine engine;
     private Transmission transmission;
     private LocalDateTime created;
+    private String sellerFirstName;
+    private String sellerLastName;
 
-
+    public String getSellerFullName() {
+        return this.sellerFirstName + " " + this.sellerLastName;
+    }
 
     public String getOfferHighlight() {
         return this.year + " " + this.brand + " " + this.model;

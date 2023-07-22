@@ -23,6 +23,10 @@ spring:
 
         org.hibernate.SQL:debug
         org.hibernate.type.descriptor.sql.BasicBinder:debug
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 #  sql:
 #    init:
@@ -32,3 +36,4 @@ mail:
   port: 1025
   username: "ddf"
   password: " "
+

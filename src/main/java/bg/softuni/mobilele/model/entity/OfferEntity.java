@@ -44,7 +44,7 @@ public class OfferEntity extends BaseEntity {
     @JoinColumn(nullable = false)
     private ModelEntity model;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private UserEntity seller;
 
