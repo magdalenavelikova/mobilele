@@ -71,39 +71,29 @@ public class OfferController {
         return "redirect:/offers/all";
     }
 
-    @GetMapping("/search")
-    public String searchOffer() {
-        return "offer-search";
-    }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public String searchQuery(@Valid SearchOfferDTO searchOfferDTO,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("searchOfferModel", searchOfferDTO);
-            redirectAttributes.addFlashAttribute(
+            model.addAttribute("searchOfferModel", searchOfferDTO);
+            model.addAttribute(
                     "org.springframework.validation.BindingResult.searchOfferModel",
                     bindingResult);
-            return "redirect:/offers/search";
+            return "offer-search";
+        }
+        if (!model.containsAttribute("searchOfferModel")) {
+            model.addAttribute("searchOfferModel", searchOfferDTO);
         }
 
-        return String.format("redirect:/offers/search/%s", searchOfferDTO.getQuery());
-    }
-
-    @GetMapping("/search/{query}")
-    public String searchResults(@PathVariable String query, Model model) {
-        model.addAttribute("offers", this.offerService.findOfferByOfferName(query));
+        if(!searchOfferDTO.isEmpty()){
+            model.addAttribute("offers",offerService.searchOffer(searchOfferDTO));
+        }
         return "offer-search";
     }
 
-
-
-    @ModelAttribute(name = "searchOfferModel")
-    private SearchOfferDTO initSearchModel() {
-        return new SearchOfferDTO();
-    }
 
     @GetMapping("/{id}/details")
     private String getDetails(@PathVariable Long id) {

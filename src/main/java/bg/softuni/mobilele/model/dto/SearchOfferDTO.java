@@ -1,6 +1,6 @@
 package bg.softuni.mobilele.model.dto;
 
-import javax.validation.constraints.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class SearchOfferDTO {
-    @NotEmpty
-    private String query;
+
+    private String model;
+    private Integer minPrice;
+    private Integer maxPrice;
+
+    public boolean isEmpty(){
+        return (model==null || model.isEmpty()) && minPrice==null && maxPrice==null;
+
+    }
 }

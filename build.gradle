@@ -41,6 +41,7 @@ dependencies {
 	testImplementation 'com.icegreen:greenmail:1.6.9'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testRuntimeOnly 'org.hsqldb:hsqldb'
+
 }
 
 tasks.named('test') {

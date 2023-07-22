@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <title>MobiLeLeLe</title>
-  <link rel="stylesheet" href="/css/reset-css.css"/>
-  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/main.css"/>
-  <script src="/js/jquery-3.5.1.slim.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-</head>
+<head th:replace="~{fragments/head.html}">Head</head>
 
 <body>
 
@@ -17,7 +9,7 @@
 <div class="container ">
   <h2 class="text-center text-white mt-4" th:text="#{search_title}">Search for offers</h2>
   <form
-          th:method="POST"
+          th:method="GET"
           th:action="@{/offers/search}"
           th:object="${searchOfferModel}"
           class="form-inline"
@@ -25,14 +17,34 @@
   >
     <div style="position: relative">
       <input
-              th:field="*{query}"
+              th:field="*{model}"
               th:errorclass="is-invalid"
                             class="form-control mr-sm-2"
               style="width: 280px;"
               type="search"
-              th:placeholder="#{search_input}"
+              th:placeholder="#{search_input_model}"
               aria-label="Search"
-              id="searchOffer"
+              id="model"
+      />
+      <input
+              th:field="*{minPrice}"
+              th:errorclass="is-invalid"
+              class="form-control mr-sm-2"
+              style="width: 280px;"
+              type="search"
+              th:placeholder="#{search_input_minPrice}"
+              aria-label="Search"
+              id="minPrice"
+      />
+      <input
+              th:field="*{maxPrice}"
+              th:errorclass="is-invalid"
+              class="form-control mr-sm-2"
+              style="width: 280px;"
+              type="search"
+              th:placeholder="#{search_input_maxPrice}"
+              aria-label="Search"
+              id="maxPrice"
       />
       <small
               id="searchOfferHelpInline"
