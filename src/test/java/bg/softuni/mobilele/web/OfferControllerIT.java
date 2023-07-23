@@ -27,16 +27,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     private OfferEntity testOffer, testAdminOffer;
 
-    @BeforeEach
-    void setUp() {
-        testUser = testDataUtils.createTestUser("user@example.com");
-        testAdmin = testDataUtils.createTestAdmin("admin@example.com");
-        var testModel =
-                testDataUtils.createTestModel(testDataUtils.createTestBrand());
-
-        testOffer = testDataUtils.createTestOffer(testUser, testModel);
-        testAdminOffer = testDataUtils.createTestOffer(testAdmin, testModel);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        testUser = testDataUtils.createTestUser("user@example.com");
+//        testAdmin = testDataUtils.createTestAdmin("admin@example.com");
+//        var testModel =
+//                testDataUtils.createTestModel(testDataUtils.createTestBrand());
+//
+//        testOffer = testDataUtils.createTestOffer(testUser, testModel);
+//        testAdminOffer = testDataUtils.createTestOffer(testAdmin, testModel);
+//    }
     @AfterEach
     void tearDown(){
         testDataUtils.cleanUpDatabase();
