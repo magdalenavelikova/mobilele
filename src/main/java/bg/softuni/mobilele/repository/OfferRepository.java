@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public interface OfferRepository extends
         JpaRepository<OfferEntity,Long> ,
         JpaSpecificationExecutor<OfferEntity> {

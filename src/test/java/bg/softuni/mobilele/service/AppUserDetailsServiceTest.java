@@ -41,19 +41,16 @@ class AppUserDetailsServiceTest {
                 setFirstName("Maggie");
                 setLastName("Velikova");
                 setIsActive(true);
-                setRoles(List.of(
-                        new UserRoleEntity() {{
-                            setRole(Role.ADMIN);
-                        }},
-                        new UserRoleEntity() {{
-                            setRole(Role.USER);
-                        }}));
+                setRoles(List.of(new UserRoleEntity() {{
+                    setRole(Role.ADMIN);
+                }}, new UserRoleEntity() {{
+                    setRole(Role.USER);
+                }}));
                 setImageUrl("http://test.html");
             }
 
         };
-        when(mockUserRepo.findByEmail(testUserEntity.getEmail()))
-                .thenReturn(Optional.of(testUserEntity));
+        when(mockUserRepo.findByEmail(testUserEntity.getEmail())).thenReturn(Optional.of(testUserEntity));
     }
 
     @Test

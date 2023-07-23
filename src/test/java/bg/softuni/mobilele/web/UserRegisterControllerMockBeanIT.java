@@ -1,6 +1,8 @@
 package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.service.EmailService;
+import bg.softuni.mobilele.util.TestDataUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,6 +27,9 @@ public class UserRegisterControllerMockBeanIT {
     private MockMvc mockMvc;
     @MockBean
     private EmailService mockEmailService;
+
+
+
 
     @Test
     void testRegistrationPageShown() throws Exception {

@@ -2,13 +2,10 @@ package bg.softuni.mobilele.model.entity;
 
 import bg.softuni.mobilele.model.enums.Role;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
-@Setter
+
+
+
 @Entity
 @Table(name = "roles")
 public class UserRoleEntity {
@@ -18,4 +15,23 @@ public class UserRoleEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "name")
     private Role role;
+
+    public UserRoleEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

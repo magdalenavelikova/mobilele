@@ -1,16 +1,12 @@
 package bg.softuni.mobilele.model.dto;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class BrandDTO {
     private Long id;
     private String name;
@@ -23,4 +19,30 @@ public class BrandDTO {
         models.add(modelDto);
     }
 
+    public BrandDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<ModelDto> getModels() {
+        return models;
+    }
+
+    public void setModels(List<ModelDto> models) {
+        this.models = models;
+    }
 }

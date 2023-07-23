@@ -27,9 +27,9 @@ spring:
       filter:
         enabled: true
 
-#  sql:
-#    init:
-#      mode: never
+  sql:
+    init:
+      mode: never
 mail:
   host: "localhost"
   port: 1025

@@ -1,9 +1,11 @@
 package bg.softuni.mobilele.service;
 
+import bg.softuni.mobilele.exeption.ObjectNotFoundException;
 import bg.softuni.mobilele.model.dto.UserRegisterDto;
 import bg.softuni.mobilele.model.entity.UserEntity;
 import bg.softuni.mobilele.model.mapper.UserMapper;
 import bg.softuni.mobilele.repository.UserRepository;
+import bg.softuni.mobilele.repository.UserRoleRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -21,14 +24,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
     private final UserMapper userMapper;
+    private final UserRoleRepository userRoleRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserService(UserRepository userRepository, UserDetailsService userDetailsService, UserMapper userMapper, EmailService emailService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserDetailsService userDetailsService, UserMapper userMapper, UserRoleRepository userRoleRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
         this.userMapper = userMapper;
+        this.userRoleRepository = userRoleRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -39,6 +44,8 @@ public class UserService {
         var rowPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rowPassword));
         user.setCreated(LocalDateTime.now());
+        user.setRoles(List.of(userRoleRepository.findById(2L)
+                .orElseThrow(()->new ObjectNotFoundException("No such Role"))));
         userRepository.save(user);
         login(user.getEmail());
         emailService.sendRegistrationEmail(

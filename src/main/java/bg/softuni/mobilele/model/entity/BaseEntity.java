@@ -1,18 +1,14 @@
 package bg.softuni.mobilele.model.entity;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 
 import javax.persistence.*;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@Getter
-@Setter
+
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
@@ -21,4 +17,30 @@ public abstract class BaseEntity {
     private LocalDateTime created;
     private LocalDateTime modified;
 
+    public BaseEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public void setModified(LocalDateTime modified) {
+        this.modified = modified;
+    }
 }
