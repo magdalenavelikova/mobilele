@@ -19,6 +19,7 @@ public class OfferDTO {
     private Engine engine;
     private Transmission transmission;
     private LocalDateTime created;
+    private LocalDateTime description;
     private String sellerFirstName;
     private String sellerLastName;
 

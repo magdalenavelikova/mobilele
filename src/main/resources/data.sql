@@ -39,7 +39,7 @@ VALUES
     ('5ebdd23e-7bf3-4166-ab67-98242b871f66', 'Качваш са, караш са, отиваш на фиеста 13. С Форд Фиеста.', 'GASOLINE', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/2005_Ford_Fiesta_%28WP%29_Ghia_5-door_hatchback_%282015-07-24%29_01.jpg/280px-2005_Ford_Fiesta_%28WP%29_Ghia_5-door_hatchback_%282015-07-24%29_01.jpg', 320013, 2612, 'MANUAL', 2005, 1, 1,'2023-07-05 12:19:06.493193');
 
 
-INSERT INTO users_roles (users_id, roles_id)
+INSERT INTO users_roles (user_entity_id, roles_id)
 VALUES
     (1, 1),
     (1, 2),

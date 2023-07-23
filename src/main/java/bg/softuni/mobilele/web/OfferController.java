@@ -1,12 +1,11 @@
 package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.exeption.ObjectNotFoundException;
-import bg.softuni.mobilele.model.dto.AddOfferDto;
+import bg.softuni.mobilele.model.dto.CreateOrUpdateOfferDto;
 import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.dto.SearchOfferDTO;
 import bg.softuni.mobilele.service.BrandService;
 import bg.softuni.mobilele.service.OfferService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 
 @Controller
@@ -51,14 +49,14 @@ public class OfferController {
     @GetMapping("/add")
     public String addOffer(Model model) {
         if (!model.containsAttribute("addOfferModel")) {
-            model.addAttribute("addOfferModel", new AddOfferDto());
+            model.addAttribute("addOfferModel", new CreateOrUpdateOfferDto());
         }
         model.addAttribute("brands", brandService.getAllBrands());
         return "offer-add";
     }
 
     @PostMapping("/add")
-    public String addOffer(@Valid AddOfferDto addOfferModel,
+    public String addOffer(@Valid CreateOrUpdateOfferDto addOfferModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
                            @AuthenticationPrincipal UserDetails userDetails) {
@@ -111,6 +109,17 @@ public class OfferController {
     public String deleteOffer(@PathVariable("id") Long id) {
         offerService.deleteOfferById(id);
         return "redirect:/offers/all";
+    }
+
+    @GetMapping("/offers/{id}/edit")
+    public String edit(@PathVariable("id") Long id,
+                       Model model) {
+        var offer = offerService.getOfferDetails(id).
+                orElseThrow(() -> new ObjectNotFoundException("Offer with ID "+ id + "not found"));
+
+        model.addAttribute("offer", offer);
+
+        return "offer-details";
     }
 
 }

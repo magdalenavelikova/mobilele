@@ -26,6 +26,7 @@ public class UserEntity extends BaseEntity {
     private Boolean isActive;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> roles = new ArrayList<>();
+
     @Column(name = "image_url")
     private String imageUrl;
 

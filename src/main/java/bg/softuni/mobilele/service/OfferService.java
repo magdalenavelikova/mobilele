@@ -1,7 +1,7 @@
 package bg.softuni.mobilele.service;
 
 
-import bg.softuni.mobilele.model.dto.AddOfferDto;
+import bg.softuni.mobilele.model.dto.CreateOrUpdateOfferDto;
 import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.dto.SearchOfferDTO;
 import bg.softuni.mobilele.model.entity.OfferEntity;
@@ -37,9 +37,9 @@ public class OfferService {
     }
 
 
-    public void addOffer(AddOfferDto addOfferDto, UserDetails userDetails) {
-        OfferEntity newOffer = offerMapper.addOfferDtoToOfferEntity(addOfferDto);
-        newOffer.setModel(modelService.findById(addOfferDto.getModelId()));
+    public void addOffer(CreateOrUpdateOfferDto createOrUpdateOfferDto, UserDetails userDetails) {
+        OfferEntity newOffer = offerMapper.createOrUpdateOfferDtoToOfferEntity(createOrUpdateOfferDto);
+        newOffer.setModel(modelService.findById(createOrUpdateOfferDto.getModelId()));
         UserEntity user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
         newOffer.setSeller(user);
         newOffer.setCreated(LocalDateTime.now());
@@ -85,6 +85,7 @@ public class OfferService {
     }
 
     private boolean isAdmin(UserEntity user) {
+
         return user.getRoles().
                 stream().
                 anyMatch(r -> r.getRole() == Role.ADMIN);

@@ -8,7 +8,7 @@ import bg.softuni.mobilele.model.enums.Transmission;
 import javax.validation.constraints.*;
 
 
-public class AddOfferDto {
+public class CreateOrUpdateOfferDto {
     @NotNull(message = "Engine type is required.")
     private Engine engine;
     @NotNull(message = "Transmission type is required.")
@@ -32,7 +32,7 @@ public class AddOfferDto {
     @NotEmpty
     private String description;
 
-    public AddOfferDto() {
+    public CreateOrUpdateOfferDto() {
     }
 
     public Engine getEngine() {

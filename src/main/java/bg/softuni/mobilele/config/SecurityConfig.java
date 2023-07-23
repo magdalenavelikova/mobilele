@@ -20,6 +20,10 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 //        securedEnabled = true,
 //        jsr250Enabled = true)
 public class SecurityConfig {
+
+
+
+
     @Bean
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
@@ -32,7 +36,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
+                                                   OAuthSuccessHandler oAuthSuccessHandler
+                                                   ) throws Exception {
         http.
                 // define which requests are allowed and which not
                         authorizeRequests().
@@ -68,10 +73,11 @@ public class SecurityConfig {
                         invalidateHttpSession(true).
                 deleteCookies("JSESSIONID").
                 and().
-                oauth2Login().
+                // allow oauth login
+                        oauth2Login().
                 loginPage("/users/login").
-                successHandler(oAuthSuccessHandler)
-        ;
+                successHandler(oAuthSuccessHandler);
+
 
         return http.build();
     }
