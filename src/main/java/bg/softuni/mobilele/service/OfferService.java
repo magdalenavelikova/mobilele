@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,6 @@ import java.util.Optional;
 @Service
 public class OfferService {
     private final OfferRepository offerRepository;
-
     private final ModelService modelService;
     private final OfferMapper offerMapper;
 
@@ -31,10 +31,8 @@ public class OfferService {
 
     public OfferService(OfferRepository offerRepository, ModelService modelService, OfferMapper offerMapper, UserRepository userRepository) {
         this.offerRepository = offerRepository;
-
         this.modelService = modelService;
         this.offerMapper = offerMapper;
-
         this.userRepository = userRepository;
     }
 
@@ -69,19 +67,27 @@ public class OfferService {
 
     }
 
-    public boolean isOwner(String username, Long id) {
-        boolean isOwner = offerRepository.findById(id)
-                .filter(offer -> offer.getSeller().getEmail().equals(username))
-                .isPresent();
-        if(isOwner){
+    public boolean isOwner(String userName, Long offerId) {
+
+        boolean isOwner = offerRepository.
+                findById(offerId).
+                filter(o -> o.getSeller().getEmail().equals(userName)).
+                isPresent();
+
+        if (isOwner) {
             return true;
         }
-        return  isAdmin(userRepository.findByEmail(username).orElseThrow());
 
+        return userRepository.
+                findByEmail(userName).
+                filter(this::isAdmin).
+                isPresent();
     }
 
     private boolean isAdmin(UserEntity user) {
-        return user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ADMIN));
+        return user.getRoles().
+                stream().
+                anyMatch(r -> r.getRole() == Role.ADMIN);
     }
 
     public void deleteOfferById(Long id) {

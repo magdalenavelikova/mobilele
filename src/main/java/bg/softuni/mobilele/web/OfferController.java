@@ -6,6 +6,7 @@ import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.dto.SearchOfferDTO;
 import bg.softuni.mobilele.service.BrandService;
 import bg.softuni.mobilele.service.OfferService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -20,13 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Optional;
 
 
 @Controller
 @RequestMapping("offers")
 public class OfferController {
-
 
     private final OfferService offerService;
     private final BrandService brandService;
@@ -76,7 +75,7 @@ public class OfferController {
     @GetMapping("/search")
     public String searchQuery(@Valid SearchOfferDTO searchOfferDTO,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes, Model model) {
+                              Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchOfferModel", searchOfferDTO);
@@ -97,16 +96,19 @@ public class OfferController {
 
 
     @GetMapping("/{id}")
-    private String getDetails(@PathVariable Long id, Model model) {
+    public String getDetails(@PathVariable Long id, Model model) {
+
         OfferDTO offerDTO = offerService.getOfferDetails(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Offer with Id " + id + "not found"));
         model.addAttribute("offerDetail", offerDTO);
         return "details";
     }
 
-   // @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
+
+    @PreAuthorize("isOwner(#id)")
+   // @PreAuthorize("@offerService.isOwner(#principal.name,#id)")
     @DeleteMapping("/{id}")
-    private String deleteOffer(@PathVariable Long id, Principal principal) {
+    public String deleteOffer(@PathVariable("id") Long id) {
         offerService.deleteOfferById(id);
         return "redirect:/offers/all";
     }

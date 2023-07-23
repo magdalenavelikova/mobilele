@@ -14,8 +14,11 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 @Configuration
+//@EnableGlobalMethodSecurity(prePostEnabled = true,
+//        securedEnabled = true,
+//        jsr250Enabled = true)
 public class SecurityConfig {
     @Bean
     public SpringSecurityDialect securityDialect() {
