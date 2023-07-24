@@ -7,6 +7,7 @@ import bg.softuni.mobilele.model.enums.Engine;
 import bg.softuni.mobilele.model.enums.Role;
 import bg.softuni.mobilele.model.enums.Transmission;
 import bg.softuni.mobilele.repository.*;
+
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,8 +16,12 @@ import java.util.stream.Collectors;
 @Component
 public class TestDataUtils {
     private UserRepository userRepository;
+
+
     private UserRoleRepository userRoleRepository;
+
     private OfferRepository offerRepository;
+
     private BrandRepository brandRepository;
     private ModelRepository modelRepository;
 
@@ -34,10 +39,10 @@ public class TestDataUtils {
 
     private void initRoles() {
         if (userRoleRepository.count() == 0) {
-            var adminRole = new UserRoleEntity() {{
+            UserRoleEntity adminRole = new UserRoleEntity() {{
                 setRole(Role.valueOf("ADMIN"));
             }};
-            var userRole = new UserRoleEntity() {{
+            UserRoleEntity userRole = new UserRoleEntity() {{
                 setRole(Role.valueOf("USER"));
             }};
             userRoleRepository.save(adminRole);
@@ -55,6 +60,7 @@ public class TestDataUtils {
                 setLastName("Velikova");
                 setIsActive(true);
                 setRoles(userRoleRepository.findAll());
+
             }
         };
         return userRepository.save(admin);
@@ -84,6 +90,7 @@ public class TestDataUtils {
             setMileage(100000);
             setPrice(BigDecimal.TEN);
             setDescription("Test description");
+            setImageUrl("image.com");
             setTransmission(Transmission.MANUAL);
             setYear(2000);
             setModel(model);

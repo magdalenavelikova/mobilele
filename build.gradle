@@ -11,8 +11,6 @@ java {
     sourceCompatibility = '17'
 }
 
-
-
 repositories {
     mavenCentral()
 }
@@ -24,7 +22,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
@@ -34,7 +31,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'com.icegreen:greenmail:1.6.9'
-    testRuntimeOnly 'org.hsqldb:hsqldb'
+    // https://mvnrepository.com/artifact/org.hsqldb/hsqldb
+    testImplementation 'org.hsqldb:hsqldb:2.4.1'
+
 
 
 }

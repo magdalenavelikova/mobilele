@@ -19,7 +19,7 @@ public class OfferDTO {
     private Engine engine;
     private Transmission transmission;
     private LocalDateTime created;
-    private LocalDateTime description;
+    private String description;
     private String sellerFirstName;
     private String sellerLastName;
 
@@ -128,5 +128,13 @@ public class OfferDTO {
 
     public String getOfferHighlight() {
         return this.year + " " + this.brand + " " + this.model;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

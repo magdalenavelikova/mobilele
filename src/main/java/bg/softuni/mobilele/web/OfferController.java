@@ -111,15 +111,19 @@ public class OfferController {
         return "redirect:/offers/all";
     }
 
-    @GetMapping("/offers/{id}/edit")
+    @PreAuthorize("isOwner(#id)")
+    @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id,
                        Model model) {
-        var offer = offerService.getOfferDetails(id).
-                orElseThrow(() -> new ObjectNotFoundException("Offer with ID "+ id + "not found"));
+        OfferDTO offerDTO = offerService.getOfferDetails(id).
+                orElseThrow(() -> new ObjectNotFoundException("Offer with ID " + id + "not found"));
 
-        model.addAttribute("offer", offer);
+        model.addAttribute("offer", offerDTO);
+        model.addAttribute("brands", brandService.getAllBrands());
 
         return "offer-details";
     }
+
+
 
 }

@@ -18,29 +18,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
- class OfferControllerIT {
+class OfferControllerIT {
     @Autowired
-    private  TestDataUtils testDataUtils;
+    private TestDataUtils testDataUtils;
     @Autowired
     private MockMvc mockMvc;
     private UserEntity testUser, testAdmin;
 
     private OfferEntity testOffer, testAdminOffer;
+    private UserRoleEntity adminRole;
 
-//    @BeforeEach
-//    void setUp() {
-//        testUser = testDataUtils.createTestUser("user@example.com");
-//        testAdmin = testDataUtils.createTestAdmin("admin@example.com");
-//        var testModel =
-//                testDataUtils.createTestModel(testDataUtils.createTestBrand());
-//
-//        testOffer = testDataUtils.createTestOffer(testUser, testModel);
-//        testAdminOffer = testDataUtils.createTestOffer(testAdmin, testModel);
-//    }
-    @AfterEach
-    void tearDown(){
-        testDataUtils.cleanUpDatabase();
+    @BeforeEach
+    void setUp() {
+       // adminRole=testDataUtils.initRoles();
+        testUser = testDataUtils.createTestUser("user@example.com");
+        testAdmin = testDataUtils.createTestAdmin("admin@example.com");
+        var testModel =
+                testDataUtils.createTestModel(testDataUtils.createTestBrand());
+        testOffer = testDataUtils.createTestOffer(testUser, testModel);
+        testAdminOffer = testDataUtils.createTestOffer(testAdmin, testModel);
     }
+//    @AfterEach
+//    void tearDown(){
+//        testDataUtils.cleanUpDatabase();
+//    }
 
     @Test
     void deleteOfferByAnonymousUser_FORBIDDEN() throws Exception {
