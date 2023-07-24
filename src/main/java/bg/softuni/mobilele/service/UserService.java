@@ -40,20 +40,21 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-public void createUserIfNotExist(String email){
-    Optional<UserEntity> user = userRepository.findByEmail(email);
-    if(user.isEmpty()){
-        UserEntity newUser =new UserEntity();
-        newUser.setEmail(email);
-        newUser.setPassword(null);
-        newUser.setCreated(LocalDateTime.now());
-        newUser.setFirstName("New");
-        newUser.setFirstName("User");
-        newUser.setRoles(setRoleUser());
-        userRepository.save(newUser);
+    public void createUserIfNotExist(String email) {
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            UserEntity newUser = new UserEntity();
+            newUser.setEmail(email);
+            newUser.setPassword(null);
+            newUser.setCreated(LocalDateTime.now());
+            newUser.setFirstName("New");
+            newUser.setLastName("User");
+            newUser.setRoles(setRoleUser());
+            userRepository.save(newUser);
+        }
+
     }
 
-}
     public void registerAndLogin(UserRegisterDto userRegisterDto, Locale preferredLocale) {
         UserEntity user = userMapper.userDtoToUserEntity(userRegisterDto);
         var rowPassword = user.getPassword();
