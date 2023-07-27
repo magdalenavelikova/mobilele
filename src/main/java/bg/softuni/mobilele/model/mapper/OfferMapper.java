@@ -11,6 +11,8 @@ import org.mapstruct.Mapping;
 public interface OfferMapper {
 
     OfferEntity createOrUpdateOfferDtoToOfferEntity(CreateOrUpdateOfferDto createOrUpdateOfferDto);
+    @Mapping(source = "model.id", target = "modelId")
+    CreateOrUpdateOfferDto offerEntityTocreateOrUpdateOfferDto(OfferEntity offerEntity);
 
 
     @Mapping(source = "model.name", target = "model")

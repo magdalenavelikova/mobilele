@@ -64,7 +64,11 @@ public class OfferService {
 
     public Optional<OfferDTO> getOfferDetails(Long id) {
         return offerRepository.findById(id).map(offerMapper::offerEntityToOfferDto);
+    }
+    public Optional<CreateOrUpdateOfferDto> getOfferDetailsForUpdate(Long id) {
+        Optional<CreateOrUpdateOfferDto> createOrUpdateOfferDto = offerRepository.findById(id).map(offerMapper::offerEntityTocreateOrUpdateOfferDto);
 
+        return offerRepository.findById(id).map(offerMapper::offerEntityTocreateOrUpdateOfferDto);
     }
 
     public boolean isOwner(String userName, Long offerId) {
@@ -93,5 +97,12 @@ public class OfferService {
 
     public void deleteOfferById(Long id) {
         offerRepository.deleteById(id);
+    }
+
+
+    public void updateOfferById(CreateOrUpdateOfferDto createOrUpdateOfferDto, Long id) {
+        OfferEntity updateOffer = offerMapper.createOrUpdateOfferDtoToOfferEntity(createOrUpdateOfferDto);
+        updateOffer.setId(id);
+        offerRepository.save(updateOffer);
     }
 }

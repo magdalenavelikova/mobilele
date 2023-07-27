@@ -48,25 +48,26 @@ public class OfferController {
 
     @GetMapping("/add")
     public String addOffer(Model model) {
-        if (!model.containsAttribute("addOfferModel")) {
-            model.addAttribute("addOfferModel", new CreateOrUpdateOfferDto());
+        if (!model.containsAttribute("offerModel")) {
+            model.addAttribute("offerModel", new CreateOrUpdateOfferDto());
         }
         model.addAttribute("brands", brandService.getAllBrands());
+        model.addAttribute("action", "");
         return "offer-add";
     }
 
     @PostMapping("/add")
-    public String addOffer(@Valid CreateOrUpdateOfferDto addOfferModel,
+    public String addOffer(@Valid CreateOrUpdateOfferDto createOrUpdateOfferDto,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
                            @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("addOfferModel", addOfferModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferModel", bindingResult);
+            redirectAttributes.addFlashAttribute("offerModel", createOrUpdateOfferDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createOrUpdateOfferDto", bindingResult);
             return "redirect:/offers/add";
         }
-        offerService.addOffer(addOfferModel, userDetails);
-        return "details";
+        offerService.addOffer(createOrUpdateOfferDto, userDetails);
+        return "redirect:/offers/all";
     }
 
 
@@ -115,15 +116,30 @@ public class OfferController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id,
                        Model model) {
-        OfferDTO offerDTO = offerService.getOfferDetails(id).
+        CreateOrUpdateOfferDto createOrUpdateOfferDto = offerService.getOfferDetailsForUpdate(id).
                 orElseThrow(() -> new ObjectNotFoundException("Offer with ID " + id + "not found"));
 
-        model.addAttribute("offer", offerDTO);
+        model.addAttribute("offerModel", createOrUpdateOfferDto);
         model.addAttribute("brands", brandService.getAllBrands());
+        model.addAttribute("action", "edit");
 
-        return "offer-details";
+        return "offer-add";
+    }
+@PutMapping("/{id}/edit")
+public String update(@PathVariable("id") Long id,
+                     @Valid CreateOrUpdateOfferDto createOrUpdateOfferDto,
+                     BindingResult bindingResult,
+                     RedirectAttributes redirectAttributes,
+                     @AuthenticationPrincipal UserDetails userDetails) {
+    if (bindingResult.hasErrors()) {
+        redirectAttributes.addFlashAttribute("offerModel", createOrUpdateOfferDto);
+        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createOrUpdateOfferDto", bindingResult);
+        return "redirect:/offers/add";
     }
 
+    offerService.updateOfferById(createOrUpdateOfferDto, id);
 
+    return "offer-details";
+}
 
 }

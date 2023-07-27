@@ -13,7 +13,7 @@
     <form
             th:action="@{/offers/add}"
             th:method="post"
-            th:object="${addOfferModel}"
+            th:object="${offerModel}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
 
@@ -155,9 +155,11 @@
 
         <div class="row">
             <div class="col col-md-4">
-                <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+                <div  class="button-holder d-flex">
+                    <input th:if="${action.isBlank()}" type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+                    <input th:if="${!action.isBlank()}"type="submit" class="btn btn-info btn-lg" value="Save Changes"/>
                 </div>
+
             </div>
         </div>
     </form>

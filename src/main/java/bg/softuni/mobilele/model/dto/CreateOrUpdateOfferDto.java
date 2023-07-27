@@ -3,12 +3,14 @@ package bg.softuni.mobilele.model.dto;
 import bg.softuni.mobilele.model.enums.Engine;
 import bg.softuni.mobilele.model.enums.Transmission;
 
-
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 
 public class CreateOrUpdateOfferDto {
+    private Long id;
     @NotNull(message = "Engine type is required.")
     private Engine engine;
     @NotNull(message = "Transmission type is required.")
@@ -34,6 +36,15 @@ public class CreateOrUpdateOfferDto {
 
     public CreateOrUpdateOfferDto() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public Engine getEngine() {
         return engine;
@@ -98,4 +109,5 @@ public class CreateOrUpdateOfferDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

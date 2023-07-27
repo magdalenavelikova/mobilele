@@ -16,4 +16,5 @@ public interface OfferRepository extends
         JpaRepository<OfferEntity,Long> ,
         JpaSpecificationExecutor<OfferEntity> {
 
+
 }
