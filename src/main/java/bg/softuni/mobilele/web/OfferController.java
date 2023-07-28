@@ -1,6 +1,7 @@
 package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.exeption.ObjectNotFoundException;
+import bg.softuni.mobilele.model.dto.BrandDTO;
 import bg.softuni.mobilele.model.dto.CreateOrUpdateOfferDto;
 import bg.softuni.mobilele.model.dto.OfferDTO;
 import bg.softuni.mobilele.model.dto.SearchOfferDTO;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -51,22 +53,23 @@ public class OfferController {
         if (!model.containsAttribute("offerModel")) {
             model.addAttribute("offerModel", new CreateOrUpdateOfferDto());
         }
+        List<BrandDTO> allBrands = brandService.getAllBrands();
         model.addAttribute("brands", brandService.getAllBrands());
-        model.addAttribute("action", "");
+
         return "offer-add";
     }
 
     @PostMapping("/add")
-    public String addOffer(@Valid CreateOrUpdateOfferDto createOrUpdateOfferDto,
+    public String addOffer(@Valid CreateOrUpdateOfferDto offerModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
                            @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("offerModel", createOrUpdateOfferDto);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createOrUpdateOfferDto", bindingResult);
+            redirectAttributes.addFlashAttribute("offerModel", offerModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel", bindingResult);
             return "redirect:/offers/add";
         }
-        offerService.addOffer(createOrUpdateOfferDto, userDetails);
+        offerService.addOffer(offerModel, userDetails);
         return "redirect:/offers/all";
     }
 
@@ -105,7 +108,7 @@ public class OfferController {
 
 
     @PreAuthorize("isOwner(#id)")
-   // @PreAuthorize("@offerService.isOwner(#principal.name,#id)")
+    // @PreAuthorize("@offerService.isOwner(#principal.name,#id)")
     @DeleteMapping("/{id}")
     public String deleteOffer(@PathVariable("id") Long id) {
         offerService.deleteOfferById(id);
@@ -113,33 +116,34 @@ public class OfferController {
     }
 
     @PreAuthorize("isOwner(#id)")
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id,
                        Model model) {
-        CreateOrUpdateOfferDto createOrUpdateOfferDto = offerService.getOfferDetailsForUpdate(id).
+        CreateOrUpdateOfferDto offerModel = offerService.getOfferDetailsForUpdate(id).
                 orElseThrow(() -> new ObjectNotFoundException("Offer with ID " + id + "not found"));
 
-        model.addAttribute("offerModel", createOrUpdateOfferDto);
+        model.addAttribute("offerModel", offerModel);
         model.addAttribute("brands", brandService.getAllBrands());
-        model.addAttribute("action", "edit");
 
-        return "offer-add";
-    }
-@PutMapping("/{id}/edit")
-public String update(@PathVariable("id") Long id,
-                     @Valid CreateOrUpdateOfferDto createOrUpdateOfferDto,
-                     BindingResult bindingResult,
-                     RedirectAttributes redirectAttributes,
-                     @AuthenticationPrincipal UserDetails userDetails) {
-    if (bindingResult.hasErrors()) {
-        redirectAttributes.addFlashAttribute("offerModel", createOrUpdateOfferDto);
-        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createOrUpdateOfferDto", bindingResult);
-        return "redirect:/offers/add";
+
+        return "update";
     }
 
-    offerService.updateOfferById(createOrUpdateOfferDto, id);
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable("id") Long id,
+                         @Valid CreateOrUpdateOfferDto offerModel,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("offerModel", offerModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel", bindingResult);
+            return "redirect:/offers/edit/{id}";
+        }
 
-    return "offer-details";
-}
+        offerService.updateOfferById(offerModel, id, userDetails);
+
+        return "redirect:/offers/all";
+    }
 
 }

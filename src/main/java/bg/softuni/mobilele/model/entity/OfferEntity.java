@@ -8,6 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -125,5 +126,22 @@ public class OfferEntity extends BaseEntity {
 
     public void setSeller(UserEntity seller) {
         this.seller = seller;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OfferEntity that)) return false;
+        return Objects.equals(offerId, that.offerId)
+                && Objects.equals(description, that.description)
+                && engine == that.engine && Objects.equals(imageUrl, that.imageUrl)
+                && Objects.equals(mileage, that.mileage) && Objects.equals(price, that.price)
+                && transmission == that.transmission && Objects.equals(year, that.year)
+                && Objects.equals(model, that.model) && Objects.equals(seller, that.seller);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(offerId, description, engine, imageUrl, mileage, price, transmission, year, model, seller);
     }
 }

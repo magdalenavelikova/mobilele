@@ -23,7 +23,6 @@ public class CreateOrUpdateOfferDto {
     private Integer mileage;
 
     @NotNull
-    @Positive
     private Long modelId;
     @NotNull
     @Positive

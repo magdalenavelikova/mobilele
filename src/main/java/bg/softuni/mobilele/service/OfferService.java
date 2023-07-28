@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +64,7 @@ public class OfferService {
     public Optional<OfferDTO> getOfferDetails(Long id) {
         return offerRepository.findById(id).map(offerMapper::offerEntityToOfferDto);
     }
+
     public Optional<CreateOrUpdateOfferDto> getOfferDetailsForUpdate(Long id) {
         Optional<CreateOrUpdateOfferDto> createOrUpdateOfferDto = offerRepository.findById(id).map(offerMapper::offerEntityTocreateOrUpdateOfferDto);
 
@@ -100,9 +100,14 @@ public class OfferService {
     }
 
 
-    public void updateOfferById(CreateOrUpdateOfferDto createOrUpdateOfferDto, Long id) {
+    public void updateOfferById(CreateOrUpdateOfferDto createOrUpdateOfferDto, Long id, UserDetails userDetails) {
         OfferEntity updateOffer = offerMapper.createOrUpdateOfferDtoToOfferEntity(createOrUpdateOfferDto);
-        updateOffer.setId(id);
+        UserEntity user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+        updateOffer.setModel(modelService.findById(createOrUpdateOfferDto.getModelId()));
+        updateOffer.setCreated(LocalDateTime.now());
+        updateOffer.setSeller(user);
         offerRepository.save(updateOffer);
     }
+
+
 }

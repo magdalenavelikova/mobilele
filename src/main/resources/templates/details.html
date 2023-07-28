@@ -38,7 +38,7 @@
                     <input  class="btn btn-outline-info my-2 my-sm-0 m-1" type="submit" value="delete">
                 </form>
                 <form
-                        th:action="@{/offers/{id}/edit(id=*{id})}"
+                        th:action="@{/offers/edit/{id}(id=*{id})}"
                         th:method="get">
                     <input  class="btn btn-outline-info my-2 my-sm-0 m-1" type="submit" value="update">
                 </form>
