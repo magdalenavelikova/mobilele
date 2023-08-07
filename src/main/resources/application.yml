@@ -5,7 +5,7 @@ logging:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${MYSQL_PASS:***REMOVED***}
+    password: ${MYSQL_PASS}
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/mobileleDb?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=TRUE
     username: ${MYSQL_USER:root}
   jpa:
@@ -31,8 +31,8 @@ spring:
         client:
           registration:
             facebook:
-              client-id: your-client-id-here
-              client-secret: your-secret-here
+              client-id: ${FACEBOOK_ID}
+              client-secret: ${FACEBOOK_SECRET}
 
   sql:
     init:
