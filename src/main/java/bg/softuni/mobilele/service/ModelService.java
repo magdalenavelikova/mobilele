@@ -17,7 +17,6 @@ public class ModelService {
 
     public ModelEntity findById(Long id) {
         Optional<ModelEntity> model = modelRepository.findById(id);
-
         return model.orElse(null);
     }
 }

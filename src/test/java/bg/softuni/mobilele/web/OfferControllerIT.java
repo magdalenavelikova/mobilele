@@ -24,13 +24,10 @@ class OfferControllerIT {
     @Autowired
     private MockMvc mockMvc;
     private UserEntity testUser, testAdmin;
-
     private OfferEntity testOffer, testAdminOffer;
-    private UserRoleEntity adminRole;
 
     @BeforeEach
     void setUp() {
-       // adminRole=testDataUtils.initRoles();
         testUser = testDataUtils.createTestUser("user@example.com");
         testAdmin = testDataUtils.createTestAdmin("admin@example.com");
         var testModel =
@@ -38,10 +35,10 @@ class OfferControllerIT {
         testOffer = testDataUtils.createTestOffer(testUser, testModel);
         testAdminOffer = testDataUtils.createTestOffer(testAdmin, testModel);
     }
-//    @AfterEach
-//    void tearDown(){
-//        testDataUtils.cleanUpDatabase();
-//    }
+    @AfterEach
+    void tearDown(){
+        testDataUtils.cleanUpDatabase();
+    }
 
     @Test
     void deleteOfferByAnonymousUser_FORBIDDEN() throws Exception {
@@ -49,7 +46,7 @@ class OfferControllerIT {
                         .with(csrf())
                 )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("users/login"));
+                .andExpect(redirectedUrl("http://localhost/users/login"));
     }
 
     @Test

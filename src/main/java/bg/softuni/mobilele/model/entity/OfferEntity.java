@@ -2,11 +2,9 @@ package bg.softuni.mobilele.model.entity;
 
 import bg.softuni.mobilele.model.enums.Engine;
 import bg.softuni.mobilele.model.enums.Transmission;
-import javax.persistence.*;
-
-
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,7 +21,7 @@ public class OfferEntity extends BaseEntity {
     )
     @Column(name = "offer_id", columnDefinition = "VARCHAR(40)")
     private UUID offerId;
-    @Column(columnDefinition = "TEXT")
+    //    @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
     private Engine engine;
@@ -52,80 +50,90 @@ public class OfferEntity extends BaseEntity {
         return offerId;
     }
 
-    public void setOfferId(UUID offerId) {
+    public OfferEntity setOfferId(UUID offerId) {
         this.offerId = offerId;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public OfferEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Engine getEngine() {
         return engine;
     }
 
-    public void setEngine(Engine engine) {
+    public OfferEntity setEngine(Engine engine) {
         this.engine = engine;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public OfferEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public OfferEntity setMileage(Integer mileage) {
         this.mileage = mileage;
+        return this;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public OfferEntity setPrice(BigDecimal price) {
         this.price = price;
+        return this;
     }
 
     public Transmission getTransmission() {
         return transmission;
     }
 
-    public void setTransmission(Transmission transmission) {
+    public OfferEntity setTransmission(Transmission transmission) {
         this.transmission = transmission;
+        return this;
     }
 
     public Integer getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public OfferEntity setYear(Integer year) {
         this.year = year;
+        return this;
     }
 
     public ModelEntity getModel() {
         return model;
     }
 
-    public void setModel(ModelEntity model) {
+    public OfferEntity setModel(ModelEntity model) {
         this.model = model;
+        return this;
     }
 
     public UserEntity getSeller() {
         return seller;
     }
 
-    public void setSeller(UserEntity seller) {
+    public OfferEntity setSeller(UserEntity seller) {
         this.seller = seller;
+        return this;
     }
 
     @Override

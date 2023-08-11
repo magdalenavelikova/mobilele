@@ -75,7 +75,7 @@ public class SecurityConfig {
                 deleteCookies("JSESSIONID").
                 and().
                 // allow oauth login
-                        oauth2Login().
+                oauth2Login().
                 loginPage("/users/login").
                 successHandler(oAuthSuccessHandler);
 

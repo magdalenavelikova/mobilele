@@ -1,5 +1,6 @@
 package bg.softuni.mobilele.service;
 
+import bg.softuni.mobilele.exeption.ObjectNotFoundException;
 import bg.softuni.mobilele.model.entity.UserEntity;
 import bg.softuni.mobilele.model.entity.UserRoleEntity;
 import bg.softuni.mobilele.model.enums.Role;
@@ -8,9 +9,10 @@ import bg.softuni.mobilele.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -25,9 +27,10 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)//без тази анотация дава грешка org.mockito.exceptions.misusing.PotentialStubbingProblem
 class AppUserDetailsServiceTest {
     @Mock
-    private UserRepository mockUserRepo;
+    private  UserRepository mockUserRepo;
     private AppUserDetailsService toTest;
     private UserEntity testUserEntity;
 
@@ -71,8 +74,8 @@ class AppUserDetailsServiceTest {
 
     }
 
-//    @Test
-//    void testLoadUserByUsernameWhenUserDoesNotExist() {
-//        assertThrows(UsernameNotFoundException.class, (Executable) toTest.loadUserByUsername("nonexist@email.com"));
-//    }
+    @Test
+    void testLoadUserByUsernameWhenUserDoesNotExist() {
+        assertThrows(UsernameNotFoundException.class, ()-> toTest.loadUserByUsername("nonexist@email.com"));
+    }
 }

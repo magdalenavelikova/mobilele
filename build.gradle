@@ -1,7 +1,10 @@
+
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.13'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+
 }
 
 group = 'bg.softuni'
@@ -31,8 +34,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'com.icegreen:greenmail:1.6.9'
-    // https://mvnrepository.com/artifact/org.hsqldb/hsqldb
-    testImplementation 'org.hsqldb:hsqldb:2.4.1'
+//    testImplementation 'com.h2database:h2'
+
+
+   testImplementation 'org.hsqldb:hsqldb'
+//    testCompileOnly 'org.hsqldb:hsqldb'
 
 
 

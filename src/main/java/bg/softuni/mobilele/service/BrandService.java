@@ -14,7 +14,6 @@ public class BrandService  {
 
     public BrandService(BrandRepository brandRepository, BrandMapper brandMapper) {
         this.brandRepository = brandRepository;
-
         this.brandMapper = brandMapper;
     }
 

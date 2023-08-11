@@ -8,6 +8,8 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.Authentication;
 
+import java.util.HashMap;
+
 public class AppSecurityExpressionHandler  extends DefaultMethodSecurityExpressionHandler {
 
     private final OfferService offerService;

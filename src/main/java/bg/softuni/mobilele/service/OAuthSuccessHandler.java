@@ -5,7 +5,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +35,6 @@ public class OAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             userService.login(userEmail);
         }
 
-        super.onAuthenticationSuccess(request, response,authentication);
+        super.onAuthenticationSuccess(request, response, authentication);
     }
 }

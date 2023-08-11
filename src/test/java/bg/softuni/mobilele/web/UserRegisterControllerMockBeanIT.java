@@ -1,8 +1,6 @@
 package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.service.EmailService;
-import bg.softuni.mobilele.util.TestDataUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,8 +27,6 @@ public class UserRegisterControllerMockBeanIT {
     private EmailService mockEmailService;
 
 
-
-
     @Test
     void testRegistrationPageShown() throws Exception {
         mockMvc.perform(get("/users/register"))
@@ -46,12 +42,12 @@ public class UserRegisterControllerMockBeanIT {
                         .param("lastName", "Angelov")
                         .param("password", "password")
                         .param("confirmPassword", "password")
-                        .cookie(new Cookie("lang", Locale.GERMAN.getLanguage()))
+                        .cookie(new Cookie("lang", Locale.ENGLISH.getLanguage()))
                         .with(csrf())
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
-        verify(mockEmailService).sendRegistrationEmail("angel@example.com", "Angel Angelov", Locale.GERMAN);
+        verify(mockEmailService).sendRegistrationEmail("angel@example.com", "Angel Angelov", Locale.ENGLISH);
     }
 
     @Test
@@ -69,7 +65,6 @@ public class UserRegisterControllerMockBeanIT {
                 .andExpect(redirectedUrl("/users/register"));
         verify(mockEmailService, never()).sendRegistrationEmail("angel@example.com", " Angelov", Locale.GERMAN);
     }
-
 
 
 }

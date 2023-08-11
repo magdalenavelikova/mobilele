@@ -26,13 +26,14 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-    security:
-      oauth2:
-        client:
-          registration:
-            facebook:
-              client-id: ${FACEBOOK_ID}
-              client-secret: ${FACEBOOK_SECRET}
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: ${FACEBOOK_ID}
+            client-secret: ${FACEBOOK_SECRET}
+
 
   sql:
     init:
@@ -42,4 +43,3 @@ mail:
   port: 1025
   username: "ddf"
   password: " "
-

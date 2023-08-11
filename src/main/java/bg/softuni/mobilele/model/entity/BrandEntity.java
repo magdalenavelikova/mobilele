@@ -21,16 +21,17 @@ public class BrandEntity extends BaseEntity {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<ModelEntity> getModels() {
         return models;
     }
 
-    public void setModels(List<ModelEntity> models) {
+    public BrandEntity setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public BrandEntity setModels(List<ModelEntity> models) {
         this.models = models;
+        return this;
     }
 }

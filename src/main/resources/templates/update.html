@@ -12,7 +12,7 @@
     <h2 class="text-center text-white">Upload Offer</h2>
     <form
             th:action="@{/offers/edit/{id}(id=*{id})}"
-            th:method="post"
+            th:method="put"
             th:object="${offerModel}"
 
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">

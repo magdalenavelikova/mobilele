@@ -31,7 +31,9 @@ public class UserRoleEntity {
         return role;
     }
 
-    public void setRole(Role role) {
+    public UserRoleEntity setRole(Role role) {
         this.role = role;
+
+        return this;
     }
 }

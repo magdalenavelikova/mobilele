@@ -129,7 +129,7 @@ public class OfferController {
         return "update";
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,
                          @Valid CreateOrUpdateOfferDto offerModel,
                          BindingResult bindingResult,
